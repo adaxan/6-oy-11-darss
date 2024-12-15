@@ -1,0 +1,106 @@
+import axios from "axios";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import eye from "../images/eye.jpg";
+import backEye from "../images/backEye.jpg";
+
+function Login() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [show, setShow] = useState(false);
+
+  function validate() {
+    if (username.length <= 2) {
+      alert("Ism juda qisqa");
+      return false;
+    }
+
+    if (password.length <= 3) {
+      alert("Password juda qisqa");
+      return false;
+    }
+
+    return true;
+  }
+
+  function handleLogin(event) {
+    event.preventDefault();
+    const isvalid = validate();
+    if (!isvalid) {
+      return;
+    }
+    const user = {
+      username,
+      password,
+    };
+    setLoading(true);
+    axios
+      .post(`https://auth-rg69.onrender.com/api/auth/signin`, user, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        localStorage.setItem("user", JSON.stringify(response.data));
+        localStorage.setItem("token", response.data.accessToken);
+        navigate("/", { state: { token: response.data.accessToken } });
+      })
+      .catch((error) => {
+        if (error.status == 404 || error.status == 401) {
+          alert(error.message);
+        }
+      });
+  }
+
+  return (
+    <div className="flex items-center justify-center h-screen bg-gray-100">
+      <div className="bg-white w-full max-w-md rounded-lg shadow-lg p-6 border border-gray-200">
+        <h2 className="text-center text-2xl font-semibold text-gray-800 mb-4">Login</h2>
+        <form className="space-y-4">
+          <input
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            className="w-full border border-gray-300 rounded-lg px-4 py-2 text-gray-700 focus:ring focus:ring-blue-500 focus:outline-none"
+            type="text"
+            placeholder="Username"
+          />
+          <div className="relative">
+            <input
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full border border-gray-300 rounded-lg px-4 py-2 text-gray-700 focus:ring focus:ring-blue-500 focus:outline-none"
+              type={show ? "text" : "password"}
+              placeholder="Password"
+            />
+            <img
+              onClick={() => setShow(!show)}
+              src={show ? eye : backEye}
+              className="absolute top-2 right-3 w-6 h-6 cursor-pointer"
+              alt="toggle visibility"
+            />
+          </div>
+          <button
+            disabled={loading}
+            onClick={handleLogin}
+            className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded-lg focus:outline-none focus:ring focus:ring-blue-500"
+          >
+            {loading ? "Loading..." : "Login"}
+          </button> 
+        </form>
+        <div className="text-center mt-4">
+          <span className="text-gray-600">Akktinzgiz yo'qmi? </span>
+          <Link
+            to="/register"
+            className="text-blue-500 hover:underline font-medium"
+          >
+            Register
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default Login;

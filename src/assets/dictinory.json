@@ -1,0 +1,35 @@
+{
+  "en": {
+    "translation": {
+      "Population": "Population",
+      "Region": "Region",
+      "Capital": "Capital",
+      "Where in the world?": "Where in the world?",
+      "Enable Dark Mode": "Enable Dark Mode",
+      "Enable Light Mode": "Enable Light Mode",
+      "Search for a country": "Search for a country"
+    }
+  },
+  " ru": {
+    "translation": {
+      "Population": "Население",
+      "Region": "Область",
+      "Capital": "Капитал",
+      "Where in the world?": "Где в мире?",
+      "Enable Dark Mode": "Включить темный режим",
+      "Enable Light Mode": "Включить световой режим",
+      "Search for a country": "Поиск страны…"
+    },
+    "uz": {
+      "translation": {
+        "Population": "Aholi",
+        "Region": "Mintaqa",
+        "Capital": "Kapital",
+        "Where in the world?": "Dunyoning qayerida?",
+        "Enable Dark Mode": "Qorong'i rejimni yoqing",
+        "Enable Light Mode": "Nur rejimini yoqing",
+        "Search for a country": "Mamlakat qidiring…"
+      }
+    }
+  }
+}
